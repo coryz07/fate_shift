@@ -77,7 +77,7 @@ export function getCriticalLifePeriods(dateISO: string): CriticalPeriod[] {
         label: 'Personal Year 9',
         startDate: new Date(year, 0, 1).toISOString(),
         endDate: new Date(year, 11, 31).toISOString(),
-        riskLevel: 'High',
+        riskLevel: 'High' as const,
         theme: 'Endings / Reflection',
         advice: "Close chapters, avoid starting large new projects, finish what remains.",
         system: "Numerology"
@@ -93,7 +93,7 @@ export function getCriticalLifePeriods(dateISO: string): CriticalPeriod[] {
         label: 'BaZi Clash Year',
         startDate: new Date(year, 0, 1).toISOString(),
         endDate: new Date(year, 11, 31).toISOString(),
-        riskLevel: 'Elevated',
+        riskLevel: 'Elevated' as const,
         theme: 'Sudden Changes',
         advice: "Avoid overextending, favor caution in family/career disputes.",
         system: 'Chinese'
@@ -106,7 +106,7 @@ export function getCriticalLifePeriods(dateISO: string): CriticalPeriod[] {
       label: 'Saturn Return',
       startDate: saturnStart.toISOString(),
       endDate: saturnEnd.toISOString(),
-      riskLevel: 'Super Critical',
+      riskLevel: 'Super Critical' as const,
       theme: 'Major Life Transition',
       advice: "Reflect deeply, move deliberately. Avoid hasty decisions.",
       system: 'Western',
@@ -114,4 +114,83 @@ export function getCriticalLifePeriods(dateISO: string): CriticalPeriod[] {
     ...numerologyYears,
     ...baZiYears,
   ].sort((a, b) => a.startDate.localeCompare(b.startDate));
+}
+
+export interface PlanetaryReturn {
+  planet: string;
+  returnNumber: number;
+  date: string;
+  ageAtReturn: number;
+  theme: string;
+  description: string;
+  intensity: 'Low' | 'Medium' | 'High' | 'Peak';
+  color: string;
+}
+
+export function getMajorPlanetaryReturns(dateISO: string): PlanetaryReturn[] {
+  const birthYear = +dateISO.slice(0, 4);
+  const currentYear = new Date().getFullYear();
+  const returns: PlanetaryReturn[] = [];
+
+  const planetaryData = [
+    {
+      planet: 'Mars',
+      cycleYears: 2.14,
+      color: '#ff4444',
+      themes: ['Energy', 'Action', 'Conflict', 'Drive', 'Passion']
+    },
+    {
+      planet: 'Jupiter',
+      cycleYears: 11.86,
+      color: '#4169e1',
+      themes: ['Expansion', 'Luck', 'Growth', 'Wisdom', 'Opportunity']
+    },
+    {
+      planet: 'Saturn',
+      cycleYears: 29.46,
+      color: '#8b4513',
+      themes: ['Structure', 'Discipline', 'Responsibility', 'Authority', 'Lessons']
+    },
+    {
+      planet: 'Uranus',
+      cycleYears: 84.02,
+      color: '#40e0d0',
+      themes: ['Revolution', 'Innovation', 'Freedom', 'Awakening', 'Change']
+    },
+    {
+      planet: 'Neptune',
+      cycleYears: 164.8,
+      color: '#4169e1',
+      themes: ['Spirituality', 'Dreams', 'Illusion', 'Creativity', 'Transcendence']
+    }
+  ];
+
+  planetaryData.forEach(planet => {
+    for (let returnNum = 1; returnNum <= 10; returnNum++) {
+      const returnYear = birthYear + (planet.cycleYears * returnNum);
+
+      if (returnYear <= currentYear + 50) {
+        const age = Math.round(returnYear - birthYear);
+        const intensity = returnNum === 1 ? 'Peak'
+                        : returnNum === 2 ? 'High'
+                        : returnNum <= 4 ? 'Medium'
+                        : 'Low';
+
+        const theme = planet.themes[Math.floor(Math.random() * planet.themes.length)];
+
+        returns.push({
+          planet: planet.planet,
+          returnNumber: returnNum,
+          date: new Date(returnYear, 0, 1).toISOString(),
+          ageAtReturn: age,
+          theme,
+          description: `${planet.planet} returns to its birth position, emphasizing themes of ${theme.toLowerCase()}.`,
+          intensity,
+          color: planet.color
+        });
+      }
+    }
+  });
+
+  return returns.sort((a, b) => a.date.localeCompare(b.date));
 }

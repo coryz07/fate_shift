@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { LifePathScreen } from './screens/LifePathScreen';
+import { AstroCartographyScreen } from './screens/AstroCartographyScreen';
 import { FullBirthInput } from './components/FullBirthInput';
-import './App.css';
 
 export interface BirthData {
   date: string;
@@ -13,6 +13,7 @@ export interface BirthData {
 function App() {
   const [birthData, setBirthData] = useState<BirthData | null>(null);
   const [showModal, setShowModal] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState<'analysis' | 'astrocartography'>('analysis');
 
   return (
     <div className="app">
@@ -32,11 +33,59 @@ function App() {
             <FullBirthInput onBirthDataSubmit={setBirthData} />
           </div>
         ) : (
-          <LifePathScreen 
-            birthData={birthData} 
-            onReset={() => setBirthData(null)}
-            onShowModal={setShowModal}
-          />
+          <div>
+            {/* Navigation Tabs */}
+            <div style={{
+              display: 'flex',
+              justifyContent: 'center',
+              marginBottom: '20px',
+              borderBottom: '1px solid #e0e0e0'
+            }}>
+              <button
+                onClick={() => setActiveTab('analysis')}
+                style={{
+                  padding: '10px 20px',
+                  border: 'none',
+                  background: activeTab === 'analysis' ? '#4b2067' : 'transparent',
+                  color: activeTab === 'analysis' ? 'white' : '#4b2067',
+                  cursor: 'pointer',
+                  borderRadius: '4px 4px 0 0',
+                  fontWeight: activeTab === 'analysis' ? 'bold' : 'normal'
+                }}
+              >
+                Life Path Analysis
+              </button>
+              <button
+                onClick={() => setActiveTab('astrocartography')}
+                style={{
+                  padding: '10px 20px',
+                  border: 'none',
+                  background: activeTab === 'astrocartography' ? '#4b2067' : 'transparent',
+                  color: activeTab === 'astrocartography' ? 'white' : '#4b2067',
+                  cursor: 'pointer',
+                  borderRadius: '4px 4px 0 0',
+                  fontWeight: activeTab === 'astrocartography' ? 'bold' : 'normal'
+                }}
+              >
+                Astro-Cartography
+              </button>
+            </div>
+
+            {/* Tab Content */}
+            {activeTab === 'analysis' && (
+              <LifePathScreen
+                birthData={birthData}
+                onReset={() => setBirthData(null)}
+                onShowModal={setShowModal}
+              />
+            )}
+            {activeTab === 'astrocartography' && (
+              <AstroCartographyScreen
+                birthData={birthData}
+                onReset={() => setBirthData(null)}
+              />
+            )}
+          </div>
         )}
       </main>
 
