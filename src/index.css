@@ -1,0 +1,13 @@
+body {
+  font-family: system-ui, sans-serif;
+  background: #fbfaff;
+  margin: 0;
+}
+h1, h2 {
+  color: #4b2067;
+}
+input[type="date"] {
+  margin: 0.5em 0;
+  padding: 0.25em;
+  font-size: 1em;
+}
