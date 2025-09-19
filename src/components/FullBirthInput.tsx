@@ -27,6 +27,8 @@ export const FullBirthInput: React.FC<FullBirthInputProps> = ({ onBirthDataSubmi
   const [selectedTimezone, setSelectedTimezone] = useState('');
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [isAdvancedMode, setIsAdvancedMode] = useState(false);
+  const [tradition, setTradition] = useState('Western');
+  const [depth, setDepth] = useState('Standard');
 
   // Mock location data - in a real app, this would come from an API
   const mockLocations: LocationSuggestion[] = [
@@ -82,7 +84,9 @@ export const FullBirthInput: React.FC<FullBirthInputProps> = ({ onBirthDataSubmi
       date,
       time: time || undefined,
       place: place || undefined,
-      timezone: selectedTimezone || undefined
+      timezone: selectedTimezone || undefined,
+      tradition,
+      depth
     };
 
     onBirthDataSubmit(birthData);
@@ -183,6 +187,43 @@ export const FullBirthInput: React.FC<FullBirthInputProps> = ({ onBirthDataSubmi
           </div>
         </div>
       )}
+
+      {/* System and Depth Selection */}
+      <div className="system-selection">
+        <div className="input-group">
+          <label htmlFor="tradition-select" className="input-label">
+            <span className="label-text">Astrology System</span>
+            <span className="label-description">Choose your preferred tradition</span>
+          </label>
+          <select
+            id="tradition-select"
+            value={tradition}
+            onChange={(e) => setTradition(e.target.value)}
+            className="input-field"
+          >
+            <option value="Western">Western</option>
+            <option value="Vedic">Vedic</option>
+            <option value="Chinese">Chinese</option>
+          </select>
+        </div>
+
+        <div className="input-group">
+          <label htmlFor="depth-select" className="input-label">
+            <span className="label-text">Analysis Depth</span>
+            <span className="label-description">Level of detail in calculations</span>
+          </label>
+          <select
+            id="depth-select"
+            value={depth}
+            onChange={(e) => setDepth(e.target.value)}
+            className="input-field"
+          >
+            <option value="Standard">Standard</option>
+            <option value="Advanced">Advanced</option>
+            <option value="All systems (Deep Dive)">All systems (Deep Dive)</option>
+          </select>
+        </div>
+      </div>
 
       <div className="form-actions">
         <button type="submit" className="submit-button">

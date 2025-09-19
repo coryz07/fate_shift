@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import { getSunSign, getLifePathNumber, getChineseZodiac, getCriticalLifePeriods, getMajorPlanetaryReturns } from '../services/precisionAstro';
 import { LifePatternsTimeline } from '../components/LifePatternsTimeline';
 import { PlanetaryReturnsTimeline } from '../components/PlanetaryReturnsTimeline';
+import { exportAsPDF, exportAsCSV } from '../utils/exportReport';
 import { BirthData } from '../App';
 
 interface LifePathScreenProps {
@@ -86,7 +87,39 @@ export const LifePathScreen: React.FC<LifePathScreenProps> = ({ birthData, onRes
         marginBottom: '20px',
         border: '1px solid #e9ecef'
       }}>
-        <h3>Birth Information</h3>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '15px' }}>
+          <h3 style={{ margin: 0 }}>Birth Information</h3>
+          <div style={{ display: 'flex', gap: '10px' }}>
+            <button
+              onClick={() => exportAsPDF(periods, "Life Patterns Report")}
+              style={{
+                padding: '8px 16px',
+                background: '#007bff',
+                color: 'white',
+                border: 'none',
+                borderRadius: '4px',
+                cursor: 'pointer',
+                fontSize: '14px'
+              }}
+            >
+              Export PDF
+            </button>
+            <button
+              onClick={() => exportAsCSV(periods, "Life Patterns Report")}
+              style={{
+                padding: '8px 16px',
+                background: '#28a745',
+                color: 'white',
+                border: 'none',
+                borderRadius: '4px',
+                cursor: 'pointer',
+                fontSize: '14px'
+              }}
+            >
+              Export CSV
+            </button>
+          </div>
+        </div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '10px' }}>
           <div>Date: {birthData.date}</div>
           {birthData.time && <div>Time: {birthData.time}</div>}

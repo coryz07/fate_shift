@@ -8,6 +8,7 @@ interface PlanetaryReturnsTimelineProps {
 export const PlanetaryReturnsTimeline: React.FC<PlanetaryReturnsTimelineProps> = ({ returns }) => {
   const [selectedPlanet, setSelectedPlanet] = useState<string | null>(null);
   const [timeRange, setTimeRange] = useState<'all' | 'next10' | 'past10'>('next10');
+  const [modalReturn, setModalReturn] = useState<PlanetaryReturn | null>(null);
 
   const currentYear = new Date().getFullYear();
   const filteredReturns = returns.filter(r => {
@@ -114,14 +115,21 @@ export const PlanetaryReturnsTimeline: React.FC<PlanetaryReturnsTimelineProps> =
                 }} />
 
                 {/* Content card */}
-                <div style={{
-                  flex: 1,
-                  background: isUpcoming ? '#f8f9ff' : '#f5f5f5',
-                  border: `1px solid ${isUpcoming ? '#e6f0ff' : '#e0e0e0'}`,
-                  borderRadius: '8px',
-                  padding: '15px',
-                  boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
-                }}>
+                <div
+                  style={{
+                    flex: 1,
+                    background: isUpcoming ? '#f8f9ff' : '#f5f5f5',
+                    border: `1px solid ${isUpcoming ? '#e6f0ff' : '#e0e0e0'}`,
+                    borderRadius: '8px',
+                    padding: '15px',
+                    boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+                    cursor: 'pointer',
+                    transition: 'background-color 0.2s ease'
+                  }}
+                  onClick={() => setModalReturn(returnData)}
+                  onMouseEnter={(e) => e.currentTarget.style.backgroundColor = isUpcoming ? '#f0f4ff' : '#efefef'}
+                  onMouseLeave={(e) => e.currentTarget.style.backgroundColor = isUpcoming ? '#f8f9ff' : '#f5f5f5'}
+                >
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px' }}>
                     <div>
                       <h4 style={{ margin: '0 0 4px 0', color: returnData.color }}>
@@ -163,11 +171,94 @@ export const PlanetaryReturnsTimeline: React.FC<PlanetaryReturnsTimelineProps> =
                       <strong>Preparation:</strong> Focus on {returnData.theme.toLowerCase()}-related growth and development.
                     </div>
                   )}
+
+                  <div style={{ fontSize: 12, color: '#4a90e2', marginTop: 8 }}>
+                    Click for detailed explanation
+                  </div>
                 </div>
               </div>
             );
           })}
         </div>
+      )}
+
+      {/* Modal */}
+      {modalReturn && (
+        <div
+          className="planetary-return-modal"
+          style={{
+            position: 'fixed',
+            top: 60,
+            left: '10%',
+            width: '80%',
+            maxWidth: '600px',
+            background: '#fff',
+            zIndex: 100,
+            border: '2px solid #2d6cdf',
+            borderRadius: 12,
+            boxShadow: '0 3px 20px rgba(0,0,0,0.10)',
+            padding: 20,
+            maxHeight: '80vh',
+            overflowY: 'auto'
+          }}
+        >
+          <div
+            style={{
+              float: 'right',
+              cursor: 'pointer',
+              fontSize: 22,
+              padding: 8,
+              color: '#666',
+              lineHeight: 1
+            }}
+            onClick={() => setModalReturn(null)}
+          >
+            ✖
+          </div>
+          <h3 style={{ marginTop: 0, color: modalReturn.color }}>
+            {modalReturn.planet} Return #{modalReturn.returnNumber}
+          </h3>
+          <div style={{ marginBottom: 10 }}>
+            <strong>Theme:</strong> {modalReturn.theme}
+          </div>
+          <div style={{ marginBottom: 10, fontSize: 14, color: '#666' }}>
+            <strong>Date:</strong> {new Date(modalReturn.date).getFullYear()} (Age {modalReturn.ageAtReturn})
+          </div>
+          <div style={{ marginBottom: 10, fontSize: 14 }}>
+            <strong>Intensity:</strong> <span style={getIntensityStyle(modalReturn.intensity)}>{modalReturn.intensity}</span>
+          </div>
+          <div style={{ margin: '14px 0', lineHeight: 1.5 }}>
+            <strong>Detailed Explanation:</strong> {modalReturn.description} This {modalReturn.returnNumber === 1 ? 'first' : modalReturn.returnNumber === 2 ? 'second' : `${modalReturn.returnNumber}th`} return
+            of {modalReturn.planet} marks a significant cycle completion and new beginning. The planet's energy focuses on themes of {modalReturn.theme.toLowerCase()},
+            offering opportunities for growth and transformation in these areas.
+          </div>
+          <div style={{
+            background: '#f8f9fa',
+            padding: 12,
+            borderRadius: 6,
+            borderLeft: `4px solid ${modalReturn.color}`
+          }}>
+            <strong>How to Prepare:</strong> Focus on {modalReturn.theme.toLowerCase()}-related activities and be open to the planetary influence.
+            This is an excellent time for {modalReturn.intensity === 'Peak' ? 'major breakthroughs' : modalReturn.intensity === 'High' ? 'significant progress' : 'steady development'}
+            in areas governed by {modalReturn.planet}.
+          </div>
+        </div>
+      )}
+
+      {/* Backdrop for modal */}
+      {modalReturn && (
+        <div
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            background: 'rgba(0,0,0,0.5)',
+            zIndex: 99
+          }}
+          onClick={() => setModalReturn(null)}
+        />
       )}
 
       {/* Legend */}

@@ -8,6 +8,8 @@ export interface BirthData {
   time?: string;
   place?: string;
   timezone?: string;
+  tradition?: string;
+  depth?: string;
 }
 
 function App() {
