@@ -8,7 +8,9 @@ export const LifePatternsTimeline: React.FC<{ periods: CriticalPeriod[] }> = ({ 
     <ul>
       {periods.map((p, i) => (
         <li key={i} style={{
-          border: '1px solid #ccc', margin: '1em 0', padding: '1em',
+          border: '1px solid #ccc',
+          margin: '1em 0',
+          padding: '1em',
           background: p.riskLevel === 'Super Critical' ? '#fff3f3'
                     : p.riskLevel === 'High' ? '#fff9e6'
                     : '#e6f7fa'
@@ -17,7 +19,7 @@ export const LifePatternsTimeline: React.FC<{ periods: CriticalPeriod[] }> = ({ 
           <div><b>When:</b> {new Date(p.startDate).toLocaleDateString()} – {new Date(p.endDate).toLocaleDateString()}</div>
           <div><b>Theme:</b> {p.theme}</div>
           <div><b>Risk Level:</b> {p.riskLevel}</div>
-          <div style={{fontWeight: 500, color: "#e00"}}>{p.advice}</div>
+          <div style={{ fontWeight: 500, color: "#e00" }}>{p.advice}</div>
           <div><i>({p.system} method)</i></div>
         </li>
       ))}

@@ -21,7 +21,6 @@ function App() {
         <h1 className="app-title">Fate Shift</h1>
         <p className="app-subtitle">Precision Chart Analyzer</p>
       </header>
-
       <main className="app-main">
         {!birthData ? (
           <div className="birth-input-section">
@@ -101,9 +100,9 @@ function App() {
                   <p>Astrology analyzes the positions of celestial bodies at your birth to reveal personality traits, tendencies, and life patterns.</p>
                   <h4>Your Astrological Profile:</h4>
                   <ul>
-                    <li><strong>Sun Sign:</strong> Core personality and ego expression</li>
-                    <li><strong>Moon Sign:</strong> Emotional nature and inner self</li>
-                    <li><strong>Rising Sign:</strong> How others perceive you</li>
+                    <li>Sun Sign: Core personality and ego expression</li>
+                    <li>Moon Sign: Emotional nature and inner self</li>
+                    <li>Rising Sign: How others perceive you</li>
                   </ul>
                   <p><strong>Take Action:</strong> Embrace your strengths, work on challenges, and align with cosmic timing for major decisions.</p>
                 </div>
@@ -114,9 +113,9 @@ function App() {
                   <p>Numerology reduces your birth date to core numbers that reveal your life's purpose and journey.</p>
                   <h4>Key Numbers:</h4>
                   <ul>
-                    <li><strong>Life Path:</strong> Your primary life purpose and direction</li>
-                    <li><strong>Expression:</strong> Your natural talents and abilities</li>
-                    <li><strong>Soul Urge:</strong> Your inner desires and motivations</li>
+                    <li>Life Path: Your primary life purpose and direction</li>
+                    <li>Expression: Your natural talents and abilities</li>
+                    <li>Soul Urge: Your inner desires and motivations</li>
                   </ul>
                   <p><strong>Take Action:</strong> Align your career, relationships, and goals with your core numbers for maximum fulfillment.</p>
                 </div>
@@ -136,9 +135,9 @@ function App() {
                   <p>This timeline shows critical periods, opportunities, and challenges based on multiple calculation systems.</p>
                   <h4>How to Use:</h4>
                   <ul>
-                    <li><strong>Opportunity Periods:</strong> Plan major ventures, relationships, or changes</li>
-                    <li><strong>Challenge Periods:</strong> Focus on patience, learning, and preparation</li>
-                    <li><strong>Transition Points:</strong> Natural times for career or life changes</li>
+                    <li>Opportunity Periods: Plan major ventures, relationships, or changes</li>
+                    <li>Challenge Periods: Focus on patience, learning, and preparation</li>
+                    <li>Transition Points: Natural times for career or life changes</li>
                   </ul>
                   <p><strong>Take Action:</strong> Use favorable periods for launches and risky moves. Use challenging periods for skill-building and reflection.</p>
                 </div>
