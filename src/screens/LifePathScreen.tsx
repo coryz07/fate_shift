@@ -50,9 +50,9 @@ export const LifePathScreen: React.FC<LifePathScreenProps> = ({ birthData, onRes
           borderRadius: "8px",
           cursor: 'pointer'
         }} onClick={() => onShowModal('astrology')}>
-          <h3 style={{ margin: '0 0 10px 0', color: '#4b2067' }}>Astrology</h3>
-          <div><strong>Sun Sign:</strong> {sunSign}</div>
-          <div style={{ fontSize: '12px', color: '#666', marginTop: '5px' }}>Click for details</div>
+          <h3 style={{ margin: 0, color: '#333' }}>Astrology</h3>
+          <p>Sun Sign: {sunSign}</p>
+          <div style={{ fontSize: '12px', color: '#666', marginTop: '8px' }}>Click for details</div>
         </div>
 
         <div style={{
@@ -61,9 +61,9 @@ export const LifePathScreen: React.FC<LifePathScreenProps> = ({ birthData, onRes
           borderRadius: "8px",
           cursor: 'pointer'
         }} onClick={() => onShowModal('numerology')}>
-          <h3 style={{ margin: '0 0 10px 0', color: '#4b2067' }}>Numerology</h3>
-          <div><strong>Life Path:</strong> {lifePath}</div>
-          <div style={{ fontSize: '12px', color: '#666', marginTop: '5px' }}>Click for details</div>
+          <h3 style={{ margin: 0, color: '#333' }}>Numerology</h3>
+          <p>Life Path: {lifePath}</p>
+          <div style={{ fontSize: '12px', color: '#666', marginTop: '8px' }}>Click for details</div>
         </div>
 
         <div style={{
@@ -72,9 +72,9 @@ export const LifePathScreen: React.FC<LifePathScreenProps> = ({ birthData, onRes
           borderRadius: "8px",
           cursor: 'pointer'
         }} onClick={() => onShowModal('chinese')}>
-          <h3 style={{ margin: '0 0 10px 0', color: '#4b2067' }}>Chinese Zodiac</h3>
-          <div><strong>Animal:</strong> {chineseZodiac}</div>
-          <div style={{ fontSize: '12px', color: '#666', marginTop: '5px' }}>Click for details</div>
+          <h3 style={{ margin: 0, color: '#333' }}>Chinese Zodiac</h3>
+          <p>Animal: {chineseZodiac}</p>
+          <div style={{ fontSize: '12px', color: '#666', marginTop: '8px' }}>Click for details</div>
         </div>
       </div>
 
@@ -88,10 +88,10 @@ export const LifePathScreen: React.FC<LifePathScreenProps> = ({ birthData, onRes
       }}>
         <h3>Birth Information</h3>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '10px' }}>
-          <div><strong>Date:</strong> {birthData.date}</div>
-          {birthData.time && <div><strong>Time:</strong> {birthData.time}</div>}
-          {birthData.place && <div><strong>Place:</strong> {birthData.place}</div>}
-          {birthData.timezone && <div><strong>Timezone:</strong> {birthData.timezone}</div>}
+          <div>Date: {birthData.date}</div>
+          {birthData.time && <div>Time: {birthData.time}</div>}
+          {birthData.place && <div>Place: {birthData.place}</div>}
+          {birthData.timezone && <div>Timezone: {birthData.timezone}</div>}
         </div>
       </div>
 
