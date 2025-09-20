@@ -1,5 +1,23 @@
 // src/services/precisionAstro.ts
+// ========================================
+// PRECISION ASTROLOGICAL CALCULATION SERVICE
+// ========================================
+// This service provides comprehensive astrological calculations combining
+// Western astrology, Vedic traditions, Chinese systems, and numerology.
+// All functions include step-by-step explanations for educational purposes.
 
+/**
+ * WESTERN ASTROLOGY - SUN SIGN CALCULATION
+ * ========================================
+ * Determines the zodiac sign based on birth date using traditional Western astrology.
+ * The sun sign represents your core personality, ego expression, and life purpose.
+ *
+ * Algorithm: Compares birth date against established zodiac date ranges.
+ * Each sign spans approximately 30 degrees of the ecliptic (360° / 12 signs).
+ *
+ * @param dateISO - Birth date in ISO format (YYYY-MM-DD)
+ * @returns The zodiac sign name
+ */
 export function getSunSign(dateISO: string): string {
   const rules = [
     { sign: 'Aries', from: '03-21', to: '04-19' },
@@ -33,19 +51,58 @@ export function getSunSign(dateISO: string): string {
   return 'Pisces';
 }
 
+/**
+ * NUMEROLOGY - LIFE PATH NUMBER CALCULATION
+ * =========================================
+ * Calculates the Life Path Number using Pythagorean numerology.
+ * This number reveals your life's purpose, challenges, and spiritual journey.
+ *
+ * Algorithm:
+ * 1. Sum all digits in the birth date (YYYYMMDD)
+ * 2. Reduce to single digit unless it's a master number (11, 22, 33)
+ * 3. Master numbers indicate special spiritual significance
+ *
+ * Example: 1985-03-15 → 1+9+8+5+0+3+1+5 = 32 → 3+2 = 5 (Life Path 5)
+ *
+ * @param dateISO - Birth date in ISO format (YYYY-MM-DD)
+ * @returns Life Path Number (1-9, 11, 22, or 33)
+ */
 export function getLifePathNumber(dateISO: string): number {
   const total = dateISO.replace(/-/g, '').split('').map(Number).reduce((a, b) => a + b);
   return reduceToSingleDigit(total);
 }
+
+/**
+ * Reduces a number to single digit while preserving master numbers
+ * Master numbers (11, 22, 33) have special spiritual significance
+ */
 function reduceToSingleDigit(n: number): number {
   while (n > 9 && n !== 11 && n !== 22 && n !== 33)
     n = n.toString().split('').map(Number).reduce((a, b) => a + b);
   return n;
 }
 
+/**
+ * CHINESE ASTROLOGY - ZODIAC ANIMAL CALCULATION
+ * =============================================
+ * Determines Chinese zodiac animal based on birth year using the 12-year cycle.
+ * Each animal represents personality traits, compatibility patterns, and life themes.
+ *
+ * Algorithm:
+ * 1. Extract birth year from date
+ * 2. Use modulo 12 calculation against known reference year
+ * 3. Map result to corresponding animal
+ *
+ * Note: Traditional Chinese New Year starts in late January/February,
+ * but this simplified version uses calendar year for broad analysis.
+ *
+ * @param dateISO - Birth date in ISO format (YYYY-MM-DD)
+ * @returns Chinese zodiac animal name
+ */
 export function getChineseZodiac(dateISO: string): string {
   const animals = ['Rat','Ox','Tiger','Rabbit','Dragon','Snake','Horse','Goat','Monkey','Rooster','Dog','Pig'];
   const year = +dateISO.slice(0,4);
+  // Using 2020 as reference year (Rat) for calculation
   return animals[(year - 2020 + 12) % 12];
 }
 
@@ -59,6 +116,21 @@ export interface CriticalPeriod {
   system: string;
 }
 
+/**
+ * CRITICAL LIFE PERIODS ANALYSIS
+ * ==============================
+ * Combines multiple astrological systems to identify significant life periods.
+ * Uses Western astrology (Saturn Return), Numerology (Personal Year 9),
+ * and Chinese BaZi principles to predict times of change and challenge.
+ *
+ * Systems integrated:
+ * - Saturn Return (ages 28-30): Major life restructuring period
+ * - Personal Year 9: Completion and endings in numerology
+ * - BaZi Clash Years: Chinese system identifying conflict periods
+ *
+ * @param dateISO - Birth date in ISO format (YYYY-MM-DD)
+ * @returns Array of critical periods sorted chronologically
+ */
 export function getCriticalLifePeriods(dateISO: string): CriticalPeriod[] {
   const birthYear = +dateISO.slice(0, 4);
   // Saturn Return
@@ -127,6 +199,25 @@ export interface PlanetaryReturn {
   color: string;
 }
 
+/**
+ * PLANETARY RETURNS CALCULATION
+ * =============================
+ * Calculates when planets return to their birth positions in your chart.
+ * These cosmic cycles mark significant themes and developmental periods.
+ *
+ * Planetary cycles calculated:
+ * - Mars (2.14 years): Energy, action, drive cycles
+ * - Jupiter (11.86 years): Growth, expansion, opportunity cycles
+ * - Saturn (29.46 years): Structure, responsibility, maturation cycles
+ * - Uranus (84.02 years): Revolutionary change, awakening cycles
+ * - Neptune (164.8 years): Spiritual development, creativity cycles
+ *
+ * Each return marks a new beginning in that planet's themes.
+ * First returns are most significant (Peak intensity).
+ *
+ * @param dateISO - Birth date in ISO format (YYYY-MM-DD)
+ * @returns Array of planetary returns sorted by date
+ */
 export function getMajorPlanetaryReturns(dateISO: string): PlanetaryReturn[] {
   const birthYear = +dateISO.slice(0, 4);
   const currentYear = new Date().getFullYear();
@@ -196,12 +287,32 @@ export function getMajorPlanetaryReturns(dateISO: string): PlanetaryReturn[] {
 }
 
 /**
- * --- VEDIC ASTROLOGY (MAJOR MAHADASHA PERIODS & NAKSHATRA) ---
- * Returns a dasha timeline (Vimshottari system) and the native's lunar nakshatra
- * with step-by-step explanations for each calculation for UI modals.
+ * ========================================
+ * VEDIC ASTROLOGY SYSTEM
+ * ========================================
+ * Advanced calculations for Vedic (Jyotish) astrology including:
+ * - Nakshatra (lunar mansion) determination
+ * - Vimshottari Dasha timeline (planetary periods)
+ * - Step-by-step explanations for educational purposes
  **/
 
-// Helper for finding the nakshatra by longitude (placeholder math—replace with true lunar longitude if you have a full ephemeris)
+/**
+ * VEDIC NAKSHATRA CALCULATION
+ * ===========================
+ * Determines the lunar mansion (nakshatra) based on Moon's position.
+ * Nakshatras are 27 divisions of the zodiac, each spanning 13°20'.
+ *
+ * Algorithm (Simplified):
+ * 1. Calculate approximate lunar longitude from birth date
+ * 2. Divide by 13.33° to find nakshatra index (0-26)
+ * 3. Determine pada (quarter) within the nakshatra
+ *
+ * Note: This is a simplified calculation for demonstration.
+ * Production systems require precise lunar ephemeris data.
+ *
+ * @param dateISO - Birth date in ISO format (YYYY-MM-DD)
+ * @returns Nakshatra name, pada number, and calculation explanation
+ */
 export function getNakshatra(dateISO: string): { nakshatra: string, pada: number, explanation: string } {
   // Static lookup for demo; in production, calculate Moon's actual ecliptic longitude for accuracy
   const nakshatras = [
@@ -235,7 +346,24 @@ const mahaPeriods = [
   { lord: 'Mercury', years: 17 }
 ];
 
-// Dasha table with stepwise explanation (simplified for demo; for actual use, first dasha is based on lunar nakshatra/birth moon degree)
+/**
+ * VIMSHOTTARI DASHA TIMELINE
+ * ==========================
+ * Calculates the 120-year Vimshottari Dasha cycle used in Vedic astrology.
+ * Each planetary period (Mahadasha) brings specific themes and influences.
+ *
+ * Algorithm:
+ * 1. Start from birth year (simplified - normally based on birth nakshatra)
+ * 2. Apply standard Vimshottari sequence with planetary periods
+ * 3. Each planet rules for a specific number of years
+ *
+ * Planetary periods in order:
+ * Ketu(7) → Venus(20) → Sun(6) → Moon(10) → Mars(7) →
+ * Rahu(18) → Jupiter(16) → Saturn(19) → Mercury(17)
+ *
+ * @param dateISO - Birth date in ISO format (YYYY-MM-DD)
+ * @returns Array of dasha periods with explanations
+ */
 export function getVimshottariDashaTimeline(dateISO: string): { lord: string, startYear: number, endYear: number, explanation: string }[] {
   const birthYear = +dateISO.slice(0, 4);
   let cursor = birthYear;
@@ -253,9 +381,12 @@ export function getVimshottariDashaTimeline(dateISO: string): { lord: string, st
 }
 
 /**
- * --- ADVANCED NUMEROLOGY (PINNACLES & CHALLENGES) ---
- * Returns pinnacles and challenges with calculation steps for modals.
- */
+ * ========================================
+ * ADVANCED NUMEROLOGY SYSTEM
+ * ========================================
+ * Calculates Pinnacles and Challenges - the four major life cycles
+ * that shape your personal development and growth patterns.
+ **/
 
 // Reduces a string (date) to a single digit (or master number)
 function numerologyReduce(n: number): number {
@@ -264,6 +395,28 @@ function numerologyReduce(n: number): number {
   return n;
 }
 
+/**
+ * NUMEROLOGY PINNACLES AND CHALLENGES
+ * ===================================
+ * Calculates the four major life cycles (Pinnacles) and obstacles (Challenges).
+ * These represent opportunities for growth and areas requiring extra attention.
+ *
+ * Pinnacle Algorithm:
+ * 1st Pinnacle (0-36): Month + Day
+ * 2nd Pinnacle (36-45): Day + Year
+ * 3rd Pinnacle (45-54): 1st + 2nd Pinnacle
+ * 4th Pinnacle (54+): Month + Year
+ *
+ * Challenge Algorithm:
+ * Uses absolute differences instead of sums:
+ * 1st Challenge: |Month - Day|
+ * 2nd Challenge: |Day - Year|
+ * 3rd Challenge: |1st Pinnacle - 2nd Pinnacle|
+ * 4th Challenge: |2nd Pinnacle - 3rd Pinnacle|
+ *
+ * @param dateISO - Birth date in ISO format (YYYY-MM-DD)
+ * @returns Object containing pinnacles and challenges arrays
+ */
 export function getNumerologyPinnaclesAndChallenges(dateISO: string): {
   pinnacles: { value: number, from: number, to: number, explanation: string }[],
   challenges: { value: number, from: number, to: number, explanation: string }[]
