@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { BirthData } from '../App';
 import './FullBirthInput.css';
 
-const ASTROLOGY_SYSTEM_PROMPT = `You are Dr. Celestine Starweaver, a forensic astrologer specializing in critical event timing and life pattern analysis.
+const _ASTROLOGY_SYSTEM_PROMPT = `You are Dr. Celestine Starweaver, a forensic astrologer specializing in critical event timing and life pattern analysis.
 
 As a forensic astrologer, your methodology includes:
 - Precise timing analysis using progressed charts and solar returns
