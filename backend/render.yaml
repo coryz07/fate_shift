@@ -1,15 +1,11 @@
 services:
   - type: web
     name: fate-shift-astro-api
-    env: python
+    runtime: python
     region: oregon
     plan: free
-    buildCommand: |
-      pip install -r requirements.txt
-      mkdir -p ephemeris
-      curl -L -o ephemeris/sechiron.se1 https://github.com/aloistr/swisseph/raw/master/ephe/sechiron.se1
-      curl -L -o ephemeris/seask10.se1 https://github.com/aloistr/swisseph/raw/master/ephe/seask10.se1
-      curl -L -o ephemeris/seas_18.se1 https://github.com/aloistr/swisseph/raw/master/ephe/seas_18.se1
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt && mkdir -p ephemeris && curl -L -o ephemeris/sechiron.se1 https://github.com/aloistr/swisseph/raw/master/ephe/sechiron.se1 && curl -L -o ephemeris/seask10.se1 https://github.com/aloistr/swisseph/raw/master/ephe/seask10.se1 && curl -L -o ephemeris/seas_18.se1 https://github.com/aloistr/swisseph/raw/master/ephe/seas_18.se1
     startCommand: uvicorn astro_api:app --host 0.0.0.0 --port $PORT
     healthCheckPath: /health
     envVars:
