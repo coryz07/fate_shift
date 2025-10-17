@@ -1,0 +1,4 @@
+fate_shift/
+node_modules/
+dist/
+.git/
