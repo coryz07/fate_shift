@@ -1,9 +1,13 @@
+[providers]
+python = "python311"
+
 [phases.setup]
 nixPkgs = ["python311", "curl"]
 
 [phases.install]
 cmds = [
-  "pip install -r backend/requirements.txt",
+  "python3.11 -m pip install --upgrade pip",
+  "python3.11 -m pip install -r backend/requirements.txt",
   "mkdir -p backend/ephemeris",
   "curl -L -o backend/ephemeris/sechiron.se1 https://github.com/aloistr/swisseph/raw/master/ephe/sechiron.se1",
   "curl -L -o backend/ephemeris/seask10.se1 https://github.com/aloistr/swisseph/raw/master/ephe/seask10.se1",
@@ -13,7 +17,7 @@ cmds = [
 [phases.build]
 
 [start]
-cmd = "cd backend && uvicorn astro_api:app --host 0.0.0.0 --port $PORT"
+cmd = "cd backend && python3.11 -m uvicorn astro_api:app --host 0.0.0.0 --port $PORT"
 
 [variables]
 EPHE_PATH = "ephemeris"
